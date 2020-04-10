@@ -1,6 +1,12 @@
-#ignore everything
+#ignore every file and folder
 /*
 /*/
 
-
+#except for
 !.gitignore
+
+!/Source/
+!/Source/Properties/
+/Source/.vs*
+/Source/bin*
+/Source/obj
