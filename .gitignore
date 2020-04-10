@@ -2,12 +2,5 @@
 /*
 /*/
 
-#
+
 !.gitignore
-
-#make exceptions for unity project
-!ModeSystemDev/Assets/
-!ModeSystemDev/ProjectSettings/
-!ModeSystemDev/Packages/
-
-!ModeMachineLibrary/
