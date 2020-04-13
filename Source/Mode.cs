@@ -1,27 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 
 namespace ModeMachine
 {
-    
-    public class TestStack : IModeStack
-    {
-        public ModeStack ModeStack => throw new NotImplementedException();
-    }
-
-    public class TestMode : Mode<TestStack>
-    {
-        
-    }
-
     public abstract class Mode : MonoBehaviour
     {
-        //constructor is internal to prevent user from inheriting directly from ModeBase
-        internal Mode(){ }
+        //channels
+        internal List<ChannelID> channels = new List<ChannelID>();
+        protected void SetChannel(ChannelID channel, bool value)
+        {
+            //presence of ChannelID on channels list indicates a true value
+            if(value == false)
+            {
+                if (channels.Contains(channel))
+                    channels.Remove(channel);
+            }
+            else
+            {
+                if (!channels.Contains(channel))
+                    channels.Add(channel);
+            }
+        }
+        public bool GetChannel(ChannelID channel)
+        {
+            return channels.Contains(channel);
+        }
+
+        public abstract int GetDepth();
+        public abstract int GetDepth(params ChannelID[] channelFilter);
+
+        internal Mode(){}//constructor is internal to force user to inherit from generic Mode<>
         internal IModeStack ParentStack;//user should not be able to change ParentStack manually
 
         //events
@@ -30,15 +40,15 @@ namespace ModeMachine
             StackWasChanged;
 
         //state
-        private bool Initialized = false;
+        private bool initialized = false;
         private bool applicationQuitting = false;
         
         //subscribe to delegates
         internal void InitializeIfNeeded()
         {
-            if (Initialized)
+            if (initialized)
                 return;
-            Initialized = true;
+            initialized = true;
             Application.quitting += DetectQuit;
             WasPushed += OnPush;
             WasRemoved += OnRemove;
@@ -74,21 +84,5 @@ namespace ModeMachine
         
         //bookkeeping functionality
         internal abstract bool ValidateParentStackType(IModeStack newStack);
-    }
-
-    public abstract class Mode<T> : Mode where T : class, IModeStack
-    {
-        //this gives a type-correct reference to the stack the mode is on
-        new public T ParentStack { get { return base.ParentStack as T; } }
-
-        internal override bool ValidateParentStackType(IModeStack newStack)
-        {
-            if (newStack as T == null)
-            {
-                Debug.LogErrorFormat("Trying to push {0} mode to the wrong type of stack. Was {1}, should be {2}", gameObject.name, newStack.GetType().ToString(), typeof(T).ToString());
-                return false;
-            }
-            return true;
-        }
     }
 }

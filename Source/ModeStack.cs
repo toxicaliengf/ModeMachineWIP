@@ -13,8 +13,6 @@ namespace ModeMachine
         public ReadOnlyCollection<Mode> Modes { get { return _Modes.AsReadOnly(); } }
         IModeStack owner;
 
-        
-
         public ModeStack(IModeStack _owner)
         {
             owner = _owner;
@@ -74,7 +72,7 @@ namespace ModeMachine
         ModeStack ModeStack { get; }
     }
 
-    public static class ModeExtension //these extensions aren't required, they just make it more intuitive to work with stacks
+    public static class IModeStackExtension //these extensions aren't required, they just make it more intuitive to work with stacks
     {
         public static void PushMode(this IModeStack iStack, Mode newMode)
         {

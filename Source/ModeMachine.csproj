@@ -26,7 +26,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\ModeSystemDev\Assets\ModeSystem\</OutputPath>
+    <OutputPath>..\ModeMachineUnityProject\Assets\ModeSystem\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -47,6 +47,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Channel.cs" />
     <Compile Include="Mode.cs" />
     <Compile Include="ModeDelegateSubscriptionManager.cs" />
     <Compile Include="ModeStack.cs" />
