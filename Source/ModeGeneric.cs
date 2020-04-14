@@ -5,7 +5,7 @@ namespace ModeMachine
 {
     public abstract class Mode<T> : Mode where T : class, IModeStack
     {
-        //this gives a type-correct reference to the stack the mode is on
+        //this gives a type-correct reference to the stack the mode is on//sdfflaksdjhfalskjdhfasldkjfh
         new public T ParentStack { get { return base.ParentStack as T; } }
 
         public sealed override int GetDepth()
