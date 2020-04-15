@@ -6,7 +6,7 @@ Current to-do list:
 - [x] OnPush, OnRemove, OnStackChanged events
 - [x] Stack querys: GetDepth
   - [x] Channels for filtering modes with GetDepth
-- [ ] Custom inspectors for debugging Mode and ModeStack
+- [x] Custom inspectors for debugging Mode and ModeStack
   - [ ] Needs to have functionality for configuring channels
 - [ ] Support passing arguments to modes
 - [ ] Write literally any documentation
