@@ -7,18 +7,19 @@ using UnityEngine;
 
 namespace ModeMachine
 {
+    [System.Serializable]
     public sealed class ModeStack
     {
         List<Mode> _Modes = new List<Mode>();
         public ReadOnlyCollection<Mode> Modes { get { return _Modes.AsReadOnly(); } }
-        IModeStack owner;
+        public IModeStack owner { get; private set; }
 
-        public ModeStack(IModeStack _owner)
+        internal void ValidateOwner(IModeStack _owner)
         {
             owner = _owner;
         }
 
-        public void PushMode(Mode mode)
+        internal void PushMode(Mode mode)
         {
             if (mode.ValidateParentStackType(owner))
             {
@@ -49,7 +50,7 @@ namespace ModeMachine
             }
         }
 
-        public void RemoveMode(Mode mode)
+        internal void RemoveMode(Mode mode)
         {
             if(_Modes != null && _Modes.Contains(mode))
             {
@@ -76,11 +77,13 @@ namespace ModeMachine
     {
         public static void PushMode(this IModeStack iStack, Mode newMode)
         {
+            iStack.ModeStack.ValidateOwner(iStack);
             iStack.ModeStack.PushMode(newMode);
         }
 
         public static void RemoveMode(this IModeStack iStack, Mode mode)
         {
+            iStack.ModeStack.ValidateOwner(iStack);
             iStack.ModeStack.RemoveMode(mode);
         }
     }

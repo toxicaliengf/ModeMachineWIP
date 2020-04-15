@@ -5,7 +5,7 @@ namespace ModeMachine
 {
     public abstract class Mode<T> : Mode where T : class, IModeStack
     {
-        //this gives a type-correct reference to the stack the mode is on//sdfflaksdjhfalskjdhfasldkjfh
+        //this gives a type-correct reference to the stack the mode is on
         new public T ParentStack { get { return base.ParentStack as T; } }
 
         public sealed override int GetDepth()
@@ -44,7 +44,10 @@ namespace ModeMachine
         {
             if (newStack as T == null)
             {
-                Debug.LogErrorFormat("Trying to push {0} mode to the wrong type of stack. Was {1}, should be {2}", gameObject.name, newStack.GetType().ToString(), typeof(T).ToString());
+                Debug.LogErrorFormat("Trying to push {0} mode to the wrong type of stack. Was {1}, should be {2}", 
+                    gameObject == null ? "[null game object]" : gameObject.name, 
+                    newStack == null ? "[null stack]" : newStack.GetType().ToString(),
+                    typeof(T).ToString()); ;
                 return false;
             }
             return true;
