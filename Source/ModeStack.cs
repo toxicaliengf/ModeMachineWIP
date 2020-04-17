@@ -19,6 +19,23 @@ namespace ModeMachine
             owner = _owner;
         }
 
+        public List<Mode> GetModes(params ChannelID[] channelFilter)
+        {
+            List<Mode> result = new List<Mode>(_Modes);
+            for(int i = result.Count; i > 0;)
+            {
+                i--;
+                for (int n = 0; n < channelFilter.Length; n++)
+                {
+                    if (!result[i].GetChannel(channelFilter[n]))
+                    {
+                        result.RemoveAt(i);
+                    }
+                }
+            }
+            return result;
+        }
+
         internal void PushMode(Mode mode)
         {
             if (mode.ValidateParentStackType(owner))
@@ -85,6 +102,11 @@ namespace ModeMachine
         {
             iStack.ModeStack.ValidateOwner(iStack);
             iStack.ModeStack.RemoveMode(mode);
+        }
+
+        public static List<Mode> GetModes(this IModeStack iStack, params ChannelID[] channelFilter)
+        {
+            return iStack.ModeStack.GetModes(channelFilter);
         }
     }
 }

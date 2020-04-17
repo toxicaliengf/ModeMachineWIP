@@ -28,8 +28,24 @@ namespace ModeMachine
             return channels.Contains(channel);
         }
 
-        public abstract int GetDepth();
+        /// <summary>
+        /// Returns true if the mode has all channels in channelFilter
+        /// </summary>
+        public bool CheckChannelFilter(params ChannelID[] channelFilter)
+        {
+            for (int n = 0; n < channelFilter.Length; n++)
+            {
+                if (!GetChannel(channelFilter[n]))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public abstract int GetDepth(params ChannelID[] channelFilter);
+        public abstract int GetDepthFull(params ChannelID[] channelFilter);
+        internal abstract int GetChildCountRecursive(params ChannelID[] channelFilter);
 
         internal Mode(){}//constructor is internal to force user to inherit from generic Mode<>
         internal IModeStack ParentStack;//user should not be able to change ParentStack manually
