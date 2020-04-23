@@ -36,6 +36,36 @@ namespace ModeMachine
             return result;
         }
 
+        internal void PushModeSilent(Mode mode)
+        {
+            if (mode.ValidateParentStackType(owner))
+            {
+                if (_Modes == null)
+                    _Modes = new List<Mode>();
+
+                if (_Modes.Contains(mode))
+                {
+                    //mode is already on stack. Position it on top
+                    if (_Modes.IndexOf(mode) == 0)
+                        return;
+                    _Modes.Remove(mode);
+                }
+                mode.InitializeIfNeeded();
+
+                mode.ParentStack = owner;
+                _Modes.Insert(0, mode);
+            }
+        }
+
+        internal void RemoveModeSilent(Mode mode)
+        {
+            if (_Modes != null && _Modes.Contains(mode))
+            {
+                _Modes.Remove(mode);
+                mode.ParentStack = null;
+            }
+        }
+
         internal void PushMode(Mode mode)
         {
             if (mode.ValidateParentStackType(owner))
@@ -102,6 +132,18 @@ namespace ModeMachine
         {
             iStack.ModeStack.ValidateOwner(iStack);
             iStack.ModeStack.RemoveMode(mode);
+        }
+
+        public static void PushModeSilent(this IModeStack iStack, Mode newMode)
+        {
+            iStack.ModeStack.ValidateOwner(iStack);
+            iStack.ModeStack.PushModeSilent(newMode);
+        }
+
+        public static void RemoveModeSilent(this IModeStack iStack, Mode mode)
+        {
+            iStack.ModeStack.ValidateOwner(iStack);
+            iStack.ModeStack.RemoveModeSilent(mode);
         }
 
         public static List<Mode> GetModes(this IModeStack iStack, params ChannelID[] channelFilter)
