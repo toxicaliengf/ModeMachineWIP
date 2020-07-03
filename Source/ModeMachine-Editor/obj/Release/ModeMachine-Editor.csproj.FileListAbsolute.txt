@@ -1,0 +1,3 @@
+D:\Projects\ModeMachine\ModeMachineUnityProject\Assets\ModeSystem\Editor\ModeMachine-Editor.dll
+D:\Projects\ModeMachine\Source\ModeMachine-Editor\obj\Release\ModeMachine-Editor.csprojAssemblyReference.cache
+D:\Projects\ModeMachine\Source\ModeMachine-Editor\obj\Release\ModeMachine-Editor.dll

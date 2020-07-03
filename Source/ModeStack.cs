@@ -113,6 +113,24 @@ namespace ModeMachine
                 }
             }
         }
+
+        internal void RemoveAllModes()
+        {
+            if (_Modes != null)
+            {
+                while (_Modes.Count > 0)
+                    RemoveMode(_Modes[0]);
+            }
+        }
+
+        internal void RemoveAllSilent()
+        {
+            if (_Modes != null)
+            {
+                while (_Modes.Count > 0)
+                    RemoveModeSilent(_Modes[0]);
+            }
+        }
     }
 
     public interface IModeStack //wrapper to allow "mix-in" functionality
@@ -120,7 +138,7 @@ namespace ModeMachine
         ModeStack ModeStack { get; }
     }
 
-    public static class IModeStackExtension //these extensions aren't required, they just make it more intuitive to work with stacks
+    public static class IModeStackExtension //allow IModeStack to get ModeStack functions called on it
     {
         public static void PushMode(this IModeStack iStack, Mode newMode)
         {
@@ -144,6 +162,18 @@ namespace ModeMachine
         {
             iStack.ModeStack.ValidateOwner(iStack);
             iStack.ModeStack.RemoveModeSilent(mode);
+        }
+
+        public static void RemoveAllModes(this IModeStack iStack)
+        {
+            iStack.ModeStack.ValidateOwner(iStack);
+            iStack.ModeStack.RemoveAllModes();
+        }
+
+        public static void RemoveAllSilent(this IModeStack iStack)
+        {
+            iStack.ModeStack.ValidateOwner(iStack);
+            iStack.ModeStack.RemoveAllSilent();
         }
 
         public static List<Mode> GetModes(this IModeStack iStack, params ChannelID[] channelFilter)
