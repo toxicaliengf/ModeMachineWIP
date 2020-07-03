@@ -1,6 +1,8 @@
 # ModeMachine
 **this library is currently WIP!**
 
+<a href = "https://www.dropbox.com/s/26usq6dni1qexnc/ModeMachine.dll?dl=0">Download DLL Here,</a>
+
 Current to-do list:
 - [x] Basic architecture, push & remove modes
 - [x] OnPush, OnRemove, OnStackChanged events
